@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "winui3-reddit-tts (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "winui3-reddit-tts (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
