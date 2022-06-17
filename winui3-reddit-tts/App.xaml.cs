@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using System.Globalization;
+using System.Speech.Synthesis;
 
 using winui3_reddit_tts.Activation;
 using winui3_reddit_tts.Contracts.Services;
@@ -79,5 +81,14 @@ public partial class App : Application
         base.OnLaunched(args);
         var activationService = App.GetService<IActivationService>();
         await activationService.ActivateAsync(args);
+
+        var synthesizer = new SpeechSynthesizer();
+        synthesizer.SetOutputToDefaultAudioDevice();
+        synthesizer.SelectVoice("Microsoft Zira Desktop");
+        var builder = new PromptBuilder();
+        builder.StartVoice(new CultureInfo("en-US"));
+        builder.AppendText("Welcome to Frostshoxx's Reddit Feeds Reader");
+        builder.EndVoice();
+        synthesizer.Speak(builder);
     }
 }
