@@ -7,6 +7,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        
+        <TextBlock x:Name="Feeds" Margin="5,8,0,0" />
+        <Button Click="LoadRedditFeeds" Margin="5,5,5,5">Load Reddit Feeds</Button>
+        <Button Click="ReadRedditFeeds" Margin="500,5,5,5">Read Reddit Feeds</Button>
     </Grid>
 </Page>

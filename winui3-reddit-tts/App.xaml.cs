@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using System.Globalization;
+using System.Net.Http;
 using System.Speech.Synthesis;
 
 using winui3_reddit_tts.Activation;
@@ -53,6 +54,7 @@ public partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+            
         })
         .Build();
 
@@ -70,6 +72,9 @@ public partial class App : Application
         UnhandledException += App_UnhandledException;
     }
 
+    public HttpClient HttpClient { get; } = new HttpClient();
+    public SpeechSynthesizer Synthesizer { get; } = new SpeechSynthesizer();
+
     private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         // TODO: Log and handle exceptions as appropriate.
@@ -82,13 +87,12 @@ public partial class App : Application
         var activationService = App.GetService<IActivationService>();
         await activationService.ActivateAsync(args);
 
-        var synthesizer = new SpeechSynthesizer();
-        synthesizer.SetOutputToDefaultAudioDevice();
-        synthesizer.SelectVoice("Microsoft Zira Desktop");
+        Synthesizer.SetOutputToDefaultAudioDevice();
+        Synthesizer.SelectVoice("Microsoft Zira Desktop");
         var builder = new PromptBuilder();
         builder.StartVoice(new CultureInfo("en-US"));
         builder.AppendText("Welcome to Frostshoxx's Reddit Feeds Reader");
         builder.EndVoice();
-        synthesizer.Speak(builder);
+        Synthesizer.Speak(builder);
     }
 }
