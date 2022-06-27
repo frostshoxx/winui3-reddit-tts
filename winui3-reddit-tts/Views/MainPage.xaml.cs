@@ -4,7 +4,7 @@ using System.Speech.Synthesis;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using winui3_reddit_tts.Core.Helpers;
-using winui3_reddit_tts.Models;
+using winui3_reddit_tts.Core.Models;
 using winui3_reddit_tts.ViewModels;
 
 namespace winui3_reddit_tts.Views;

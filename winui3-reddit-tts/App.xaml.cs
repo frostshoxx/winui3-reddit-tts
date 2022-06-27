@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 using System.Globalization;
 using System.Net.Http;
 using System.Speech.Synthesis;
-
+using System.Threading.Tasks;
 using winui3_reddit_tts.Activation;
 using winui3_reddit_tts.Contracts.Services;
 using winui3_reddit_tts.Core.Contracts.Services;
@@ -87,12 +87,14 @@ public partial class App : Application
         var activationService = App.GetService<IActivationService>();
         await activationService.ActivateAsync(args);
 
-        Synthesizer.SetOutputToDefaultAudioDevice();
-        Synthesizer.SelectVoice("Microsoft Zira Desktop");
-        var builder = new PromptBuilder();
-        builder.StartVoice(new CultureInfo("en-US"));
-        builder.AppendText("Welcome to Frostshoxx's Reddit Feeds Reader");
-        builder.EndVoice();
-        Synthesizer.Speak(builder);
+        await Task.Run(() => {
+            Synthesizer.SetOutputToDefaultAudioDevice();
+            Synthesizer.SelectVoice("Microsoft Zira Desktop");
+            var builder = new PromptBuilder();
+            builder.StartVoice(new CultureInfo("en-US"));
+            builder.AppendText("Welcome to Frostshoxx's Reddit Feeds Reader");
+            builder.EndVoice();
+            Synthesizer.Speak(builder);
+        });       
     }
 }
