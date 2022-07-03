@@ -44,7 +44,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
-            services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<IRedditFeedsService, RedditFeedsService>();
 
             // Views and ViewModels
             services.AddTransient<MainViewModel>();
@@ -54,7 +54,7 @@ public partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-            
+
         })
         .Build();
 
@@ -74,6 +74,7 @@ public partial class App : Application
 
     public HttpClient HttpClient { get; } = new HttpClient();
     public SpeechSynthesizer Synthesizer { get; } = new SpeechSynthesizer();
+    public IRedditFeedsService RedditFeedsService { get; } = new RedditFeedsService();
 
     private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -87,7 +88,8 @@ public partial class App : Application
         var activationService = App.GetService<IActivationService>();
         await activationService.ActivateAsync(args);
 
-        await Task.Run(() => {
+        await Task.Run(() =>
+        {
             Synthesizer.SetOutputToDefaultAudioDevice();
             Synthesizer.SelectVoice("Microsoft Zira Desktop");
             var builder = new PromptBuilder();
@@ -95,6 +97,6 @@ public partial class App : Application
             builder.AppendText("Welcome to Frostshoxx's Reddit Feeds Reader");
             builder.EndVoice();
             Synthesizer.Speak(builder);
-        });       
+        });
     }
 }

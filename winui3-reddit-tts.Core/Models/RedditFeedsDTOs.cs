@@ -193,7 +193,7 @@ public class AllAwarding
     }
 }
 
-public class Child
+public class RedditFeedResult
 {
     [JsonProperty("kind")]
     public string Kind
@@ -235,7 +235,7 @@ public class Data
     }
 
     [JsonProperty("children")]
-    public List<Child> Children
+    public List<RedditFeedResult> Children
     {
         get; set;
     }
